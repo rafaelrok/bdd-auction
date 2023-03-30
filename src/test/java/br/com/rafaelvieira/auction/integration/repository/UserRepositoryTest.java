@@ -1,7 +1,7 @@
 package br.com.rafaelvieira.auction.integration.repository;
 
 import br.com.rafaelvieira.auction.integration.controller.TestBase;
-import br.com.rafaelvieira.auction.model.Usuario;
+import br.com.rafaelvieira.auction.model.User;
 import br.com.rafaelvieira.auction.repositories.UsuarioRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,7 +12,7 @@ import org.springframework.test.context.ActiveProfiles;
 
 @DataJpaTest
 @ActiveProfiles("test") 
-public class UsuarioRepositoryTest extends TestBase {
+public class UserRepositoryTest extends TestBase {
 
 	@Autowired
 	UsuarioRepository usuarios;
@@ -24,7 +24,7 @@ public class UsuarioRepositoryTest extends TestBase {
 	
 	@Test
 	public void deveCarregarUmUsuarioPeloNome() {
-		Usuario usuarioCarregado = usuarios.getUserByUsername("Fulano");
-		Assertions.assertEquals(this.getUsuarioFulano(), usuarioCarregado);
+		User userCarregado = usuarios.getUserByUsername("Fulano");
+		Assertions.assertEquals(this.getUsuarioFulano(), userCarregado);
 	}
 }

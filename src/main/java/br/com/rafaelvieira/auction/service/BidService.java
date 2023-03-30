@@ -1,9 +1,9 @@
 package br.com.rafaelvieira.auction.service;
 
-import br.com.rafaelvieira.auction.model.Lance;
-import br.com.rafaelvieira.auction.model.Leilao;
-import br.com.rafaelvieira.auction.model.Usuario;
-import br.com.rafaelvieira.auction.mudi.dto.NovoLanceDto;
+import br.com.rafaelvieira.auction.model.Auction;
+import br.com.rafaelvieira.auction.model.Bid;
+import br.com.rafaelvieira.auction.model.User;
+import br.com.rafaelvieira.auction.mudi.dto.NewBidDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +12,7 @@ import br.com.rafaelvieira.auction.repositories.LeilaoRepository;
 import br.com.rafaelvieira.auction.repositories.UsuarioRepository;
 
 @Service
-public class LanceService {
+public class BidService {
 
 	@Autowired
 	public LanceRepository lancesRepo;
@@ -23,14 +23,14 @@ public class LanceService {
 	@Autowired
 	public LeilaoRepository leiloesRepo;
 
-	public boolean propoeLance(NovoLanceDto lanceDto, String nomeUsuario) {
+	public boolean propoeLance(NewBidDto lanceDto, String nomeUsuario) {
 
-		Usuario usuario = usuariosRepo.getUserByUsername(nomeUsuario);
-		Lance lance = lanceDto.toLance(usuario);
+		User user = usuariosRepo.getUserByUsername(nomeUsuario);
+		Bid lance = lanceDto.toLance(user);
 
-		Leilao leilao =  this.getLeilao(lanceDto.getLeilaoId());
+		Auction auction =  this.getLeilao(lanceDto.getLeilaoId());
 
-		if (leilao.propoe(lance)) {
+		if (auction.propoe(lance)) {
 			lancesRepo.save(lance);
 			return true;
 		}
@@ -38,7 +38,7 @@ public class LanceService {
 		return false;
 	}
 
-	public Leilao getLeilao(Long leilaoId) {
+	public Auction getLeilao(Long leilaoId) {
 		return leiloesRepo.getOne(leilaoId);
 	}
 }

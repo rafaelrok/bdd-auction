@@ -21,16 +21,16 @@
 			<th scope="col"></th>
 			<th scope="col"></th>
 		</tr>
-			<tr th:each="leilao : ${leiloes}" >
-				<td scope="row" th:text="${leilao.nome}">Nome</td>
-				<td th:text="${#temporals.format(leilao.dataAbertura, 'dd/MM/yyyy')}">10/02/2020</td>
-				<td th:text="${leilao.valorInicial}">Valor Inicial</td>
-				<td th:text="${leilao.usuario.nome}">Nome do Usuario</td>
-				<td sec:authorize="isAuthenticated()" th:if="${leilao.usuario.nome != usuarioLogado.name}">
-					<a class="btn btn-block btn-info" th:href="@{'/leiloes/' + ${leilao.id}}" >dar lance</a>
+			<tr th:each="auction : ${leiloes}" >
+				<td scope="row" th:text="${auction.nome}">Nome</td>
+				<td th:text="${#temporals.format(auction.dataAbertura, 'dd/MM/yyyy')}">10/02/2020</td>
+				<td th:text="${auction.valorInicial}">Valor Inicial</td>
+				<td th:text="${auction.user.nome}">Nome do Usuario</td>
+				<td sec:authorize="isAuthenticated()" th:if="${auction.user.nome != usuarioLogado.name}">
+					<a class="btn btn-block btn-info" th:href="@{'/leiloes/' + ${auction.id}}" >dar lance</a>
 				</td>
-				<td sec:authorize="isAuthenticated()" th:if="${leilao.usuario.nome == usuarioLogado.name} ">
-					<a class="btn btn-block btn-primary m-0" th:href="@{'/leiloes/' + ${leilao.id}} + '/form'">editar</a>
+				<td sec:authorize="isAuthenticated()" th:if="${auction.user.nome == usuarioLogado.name} ">
+					<a class="btn btn-block btn-primary m-0" th:href="@{'/leiloes/' + ${auction.id}} + '/form'">editar</a>
 				</td>
 			</tr>
 

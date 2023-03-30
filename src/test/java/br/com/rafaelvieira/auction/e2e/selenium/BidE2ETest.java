@@ -2,27 +2,27 @@ package br.com.rafaelvieira.auction.e2e.selenium;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import br.com.rafaelvieira.auction.e2e.pages.DetalhesDoLeilaoPage;
-import br.com.rafaelvieira.auction.e2e.pages.LeiloesPage;
+import br.com.rafaelvieira.auction.e2e.pages.DetailsAuctionPage;
+import br.com.rafaelvieira.auction.e2e.pages.AuctionPage;
 import br.com.rafaelvieira.auction.e2e.pages.LoginPage;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class LanceE2ETest extends E2ETestBase{
+public class BidE2ETest extends E2ETestBase{
 	
-	private LeiloesPage leiloesPage;
+	private AuctionPage auctionPage;
 
 	@BeforeEach
 	void setup() {
 		LoginPage loginPage = new LoginPage(getDriver());
-		this.leiloesPage = loginPage.realizaLoginComoFulano();
+		this.auctionPage = loginPage.realizaLoginComoFulano();
 	}
 	
     @Test
     public void deveAceitarUmLance() {
 		LoginPage loginPage = new LoginPage(getDriver());
-		this.leiloesPage = loginPage.realizaLoginComoFulano();
-		DetalhesDoLeilaoPage detalhesLeilaoPage = leiloesPage.visitaLeilaoPaginaParaDarLance();
+		this.auctionPage = loginPage.realizaLoginComoFulano();
+		DetailsAuctionPage detalhesLeilaoPage = auctionPage.visitaLeilaoPaginaParaDarLance();
 		
 		detalhesLeilaoPage.darLance("150");
 		
@@ -31,7 +31,7 @@ public class LanceE2ETest extends E2ETestBase{
     
     @Test
     public void naoDeveAceitarDoisLancesSeguidosDoMesmoUsuario() {
-		DetalhesDoLeilaoPage detalhesLeilaoPage = leiloesPage.visitaLeilaoPaginaParaDarLance();
+		DetailsAuctionPage detalhesLeilaoPage = auctionPage.visitaLeilaoPaginaParaDarLance();
 		detalhesLeilaoPage.darLance("150");
 		detalhesLeilaoPage.darLance("160");
 
@@ -40,7 +40,7 @@ public class LanceE2ETest extends E2ETestBase{
     
     @Test
     public void naoDeveAceitarDoisLancesComOMesmoValor() {
-		DetalhesDoLeilaoPage detalhesLeilaoPage = leiloesPage.visitaLeilaoPaginaParaDarLance();
+		DetailsAuctionPage detalhesLeilaoPage = auctionPage.visitaLeilaoPaginaParaDarLance();
 		detalhesLeilaoPage.darLance("150");
 		detalhesLeilaoPage.darLance("150");
 

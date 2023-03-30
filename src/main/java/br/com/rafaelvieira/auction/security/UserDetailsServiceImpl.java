@@ -1,6 +1,6 @@
 package br.com.rafaelvieira.auction.security;
 
-import br.com.rafaelvieira.auction.model.Usuario;
+import br.com.rafaelvieira.auction.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -16,13 +16,13 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username)
             throws UsernameNotFoundException {
-        Usuario user = userRepository.getUserByUsername(username);
+        User user = userRepository.getUserByUsername(username);
          
         if (user == null) {
-            throw new UsernameNotFoundException("Usuario nao encontrado");
+            throw new UsernameNotFoundException("User nao encontrado");
         }
          
-        return new LeilaoUserDetails(user);
+        return new AuctionUserDetails(user);
     }
  
 }

@@ -2,9 +2,9 @@ package br.com.rafaelvieira.auction.controller;
 
 import java.math.BigDecimal;
 
-import br.com.rafaelvieira.auction.model.Lance;
-import br.com.rafaelvieira.auction.model.Leilao;
-import br.com.rafaelvieira.auction.model.Usuario;
+import br.com.rafaelvieira.auction.model.Auction;
+import br.com.rafaelvieira.auction.model.Bid;
+import br.com.rafaelvieira.auction.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.http.ResponseEntity;
@@ -49,37 +49,37 @@ public class DBController {
 		leiloes.deleteAll();
 		usuarios.deleteAll();
 		
-		Usuario fulano = new Usuario("fulano", "fulano@gmail.com", encoder.encode("pass"));
+		User fulano = new User("fulano", "fulano@gmail.com", encoder.encode("pass"));
 		fulano.setRole("ROLE_USER");
 		fulano.activa();
 		
-		Usuario beltrano = new Usuario("beltrano", "beltrano@gmail.com", encoder.encode("pass"));
+		User beltrano = new User("beltrano", "beltrano@gmail.com", encoder.encode("pass"));
 		beltrano.setRole("ROLE_USER");
 		beltrano.activa();
 		
-		Usuario cigano = new Usuario("cigano", "cigano@gmail.com", encoder.encode("pass"));
+		User cigano = new User("cigano", "cigano@gmail.com", encoder.encode("pass"));
 		cigano.setRole("ROLE_ADMIN");
 		cigano.activa();
 		
-		Leilao leilaoTablet = new Leilao("Tablet Xpto 3",new BigDecimal("5.0"), fulano);
+		Auction auctionTablet = new Auction("Tablet Xpto 3",new BigDecimal("5.0"), fulano);
 		
-		Lance lance10 = new Lance(beltrano, BigDecimal.TEN);
-		Lance lance15 = new Lance(cigano, new BigDecimal("15.0"));
+		Bid lance10 = new Bid(beltrano, BigDecimal.TEN);
+		Bid lance15 = new Bid(cigano, new BigDecimal("15.0"));
 		
-		leilaoTablet.propoe(lance10);
-		leilaoTablet.propoe(lance15);
+		auctionTablet.propoe(lance10);
+		auctionTablet.propoe(lance15);
 		
 		usuarios.save(fulano);
 		usuarios.save(beltrano);
 		usuarios.save(cigano);
 
-		leiloes.save(leilaoTablet);
+		leiloes.save(auctionTablet);
 
 		lances.save(lance10);
 		lances.save(lance15);
 		
-		Leilao leilaoSemLance = new Leilao("Computador Z3", new BigDecimal("500.0"), beltrano);
-		leiloes.save(leilaoSemLance);
+		Auction auctionSemLance = new Auction("Computador Z3", new BigDecimal("500.0"), beltrano);
+		leiloes.save(auctionSemLance);
 
 
 		return ResponseEntity.ok("{'message':'dados populadas'}");

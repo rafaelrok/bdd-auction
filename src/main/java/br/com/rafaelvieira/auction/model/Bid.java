@@ -15,7 +15,7 @@ import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotNull;
 
 @Entity
-public class Lance {
+public class Bid {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,25 +28,25 @@ public class Lance {
 	private LocalDate data;
 
 	@OneToOne(fetch = FetchType.EAGER)
-	private Usuario usuario;
+	private User user;
 
 	@ManyToOne
 	@JoinColumn(nullable = false)
-	private Leilao leilao;
+	private Auction auction;
 
 	@Deprecated
-	public Lance() {}
+	public Bid() {}
 	
-	public Lance(Usuario usuario, BigDecimal valor) {
+	public Bid(User user, BigDecimal valor) {
 		if (valor.doubleValue() <= 0) {
 			throw new IllegalArgumentException();
 		}
-		this.usuario = usuario;
+		this.user = user;
 		this.valor = valor;
 		this.data = LocalDate.now();
 	}
 
-	public Lance(@NotNull @DecimalMin("0.1") BigDecimal valor) {
+	public Bid(@NotNull @DecimalMin("0.1") BigDecimal valor) {
 		this.valor = valor;
 	}
 
@@ -74,20 +74,20 @@ public class Lance {
 		this.data = data;
 	}
 
-	public Usuario getUsuario() {
-		return usuario;
+	public User getUsuario() {
+		return user;
 	}
 
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
+	public void setUsuario(User user) {
+		this.user = user;
 	}
 
-	public Leilao getLeilao() {
-		return leilao;
+	public Auction getLeilao() {
+		return auction;
 	}
 
-	public void setLeilao(Leilao leilao) {
-		this.leilao = leilao;
+	public void setLeilao(Auction auction) {
+		this.auction = auction;
 	}
 
 }

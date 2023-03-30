@@ -16,13 +16,13 @@
 				
 			<div class="card">
 			  <div class="card-body">
-			    <h5 class="card-title" th:text="${leilao.nome}">Nome</h5>
+			    <h5 class="card-title" th:text="${auction.nome}">Nome</h5>
 			    <h6 class="card-subtitle mb-1 text-muted">
-			     <span th:if="${leilao.valorInicial} != null" th:text="${'R$ ' + #numbers.formatDecimal(leilao.valorInicial, 1,'POINT',2,'COMMA')}">
+			     <span th:if="${auction.valorInicial} != null" th:text="${'R$ ' + #numbers.formatDecimal(auction.valorInicial, 1,'POINT',2,'COMMA')}">
 			     200,99
 			     </span>
 			    </h6>
-			    <p class="card-text" th:text="${leilao.usuario.nome} + ', ' + ${#temporals.format(leilao.dataAbertura, 'dd/MM/yyyy')}">Usuario e Data abertura</p>
+			    <p class="card-text" th:text="${auction.user.nome} + ', ' + ${#temporals.format(auction.dataAbertura, 'dd/MM/yyyy')}">Usuario e Data abertura</p>
 			  </div>
 			</div>
 			
@@ -39,12 +39,12 @@
 					        Por favor insira um valor válido.
 					    </div>
 					</div>
-				<div><input type="hidden" th:value="${leilao.id}" id="leilaoId" name="leilaoId"/></div>
+				<div><input type="hidden" th:value="${auction.id}" id="leilaoId" name="leilaoId"/></div>
 					  
 				</form>
 			</div>	
 			
-			<div class="card mt-2" th:if="${!leilao.lances.empty}">
+			<div class="card mt-2" th:if="${!auction.lances.empty}">
 			  <div class="card-body">
 					<h5 class="card-title">Lances dados</h5>
 					<table id="lancesDados" class="table">
@@ -54,9 +54,9 @@
 							<td>Valor</td>
 						</tr>
 						 
-						<tr th:each="lance : ${leilao.lances}">
+						<tr th:each="lance : ${auction.lances}">
 							<td scope="row" th:text="${#temporals.format(lance.data, 'dd/MM/yyyy')}">Data</td>
-							<td th:text="${lance.usuario.nome}">Nome do Usuario</td>
+							<td th:text="${lance.user.nome}">Nome do Usuario</td>
 							<td th:text="${'R$ ' + #numbers.formatDecimal(lance.valor, 1,'POINT',2,'COMMA')}">Valor</td>
 						</tr>
 					</table>

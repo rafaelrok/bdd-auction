@@ -16,7 +16,7 @@ public class LoginPage {
         this.driver = driver;
     }
 
-    public LeiloesPage realizaLoginComo(String nome, String senha) {
+    public AuctionPage realizaLoginComo(String nome, String senha) {
     	driver.get(URL_LOGIN_PAGE);
 
         WebElement txtNome = driver.findElement(By.name("username"));
@@ -27,10 +27,10 @@ public class LoginPage {
 
         txtNome.submit();
                 
-        return new LeiloesPage(driver);
+        return new AuctionPage(driver);
     }
     
-    public LeiloesPage realizaLoginComoFulano() {
+    public AuctionPage realizaLoginComoFulano() {
     	return realizaLoginComo("fulano", "pass");
     }
 

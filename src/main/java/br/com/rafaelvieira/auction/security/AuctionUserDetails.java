@@ -3,17 +3,17 @@ package br.com.rafaelvieira.auction.security;
 import java.util.Arrays;
 import java.util.Collection;
 
-import br.com.rafaelvieira.auction.model.Usuario;
+import br.com.rafaelvieira.auction.model.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-public class LeilaoUserDetails implements UserDetails {
+public class AuctionUserDetails implements UserDetails {
 	 
 	private static final long serialVersionUID = 1L;
-	private Usuario user;
+	private User user;
      
-    public LeilaoUserDetails(Usuario user) {
+    public AuctionUserDetails(User user) {
         this.user = user;
     }
  
@@ -23,7 +23,7 @@ public class LeilaoUserDetails implements UserDetails {
         return Arrays.asList(authority);
     }
     
-    public Usuario getUsuario() {
+    public User getUsuario() {
     	return this.user;
     }
  

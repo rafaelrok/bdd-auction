@@ -4,8 +4,8 @@ import java.security.Principal;
 
 import javax.validation.Valid;
 
-import br.com.rafaelvieira.auction.model.Leilao;
-import br.com.rafaelvieira.auction.mudi.dto.NovoLanceDto;
+import br.com.rafaelvieira.auction.model.Auction;
+import br.com.rafaelvieira.auction.mudi.dto.NewBidDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
@@ -15,32 +15,32 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import br.com.rafaelvieira.auction.service.LanceService;
+import br.com.rafaelvieira.auction.service.BidService;
 
 @Controller
 @RequestMapping(value = "/lances")
-public class LanceController {
+public class BidController {
 
 	
 	@Autowired
-	private LanceService service;
+	private BidService service;
 
 	@RequestMapping(method = RequestMethod.POST)
-	public ModelAndView novoLance(@Valid @ModelAttribute("lance") NovoLanceDto lanceDto, Errors erros, Principal principal, RedirectAttributes redirectAttributes) {
+	public ModelAndView novoLance(@Valid @ModelAttribute("lance") NewBidDto lanceDto, Errors erros, Principal principal, RedirectAttributes redirectAttributes) {
 
-		Leilao leilao = service.getLeilao(lanceDto.getLeilaoId());
+		Auction auction = service.getLeilao(lanceDto.getLeilaoId());
 
 		if(erros.hasErrors()) {
 			ModelAndView mv = new ModelAndView("/leilao/show");
 			mv.addObject("lance", lanceDto);
-			mv.addObject("leilao", leilao);
+			mv.addObject("leilao", auction);
 			return mv;
 		}
 		
 		if(service.propoeLance(lanceDto, principal.getName())) {
-			redirectAttributes.addFlashAttribute("message", "Lance adicionado com sucesso!");
+			redirectAttributes.addFlashAttribute("message", "Bid adicionado com sucesso!");
 		} else {
-			redirectAttributes.addFlashAttribute("error", "Lance invalido!");
+			redirectAttributes.addFlashAttribute("error", "Bid invalido!");
 		}
 		
 		String redirectURL = "redirect:/leiloes/" + lanceDto.getLeilaoId();

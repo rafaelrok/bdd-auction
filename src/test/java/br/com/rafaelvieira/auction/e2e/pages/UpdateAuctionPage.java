@@ -4,11 +4,11 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-public class AlterarLeilaoPage {
+public class UpdateAuctionPage {
 
 	private WebDriver driver;
 
-	public AlterarLeilaoPage(WebDriver driver) {
+	public UpdateAuctionPage(WebDriver driver) {
 		this.driver = driver;
 	}
 

@@ -4,15 +4,15 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-public class NovoLeilaoPage {
+public class NewAuctionPage {
 
     private WebDriver driver;
 
-    public NovoLeilaoPage(WebDriver driver) {
+    public NewAuctionPage(WebDriver driver) {
         this.driver = driver;
     }
 
-    public LeiloesPage preencheForm(String nome, String valor, String data) {
+    public AuctionPage preencheForm(String nome, String valor, String data) {
     	
 //    	WebDriverWait wait = new WebDriverWait(driver, 10);
 //		wait.until(ExpectedConditions.presenceOfElementLocated(By.name("dataAbertura")));
@@ -32,7 +32,7 @@ public class NovoLeilaoPage {
         WebElement button = driver.findElement(By.id("button-submit"));							
         button.submit();
         
-        return new LeiloesPage(driver);
+        return new AuctionPage(driver);
     }
 
 }

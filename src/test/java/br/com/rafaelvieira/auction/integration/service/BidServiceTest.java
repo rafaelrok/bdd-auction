@@ -2,14 +2,14 @@ package br.com.rafaelvieira.auction.integration.service;
 
 import java.math.BigDecimal;
 
-import br.com.rafaelvieira.auction.model.Lance;
-import br.com.rafaelvieira.auction.model.Leilao;
-import br.com.rafaelvieira.auction.model.Usuario;
-import br.com.rafaelvieira.auction.mudi.dto.NovoLanceDto;
+import br.com.rafaelvieira.auction.model.Auction;
+import br.com.rafaelvieira.auction.model.Bid;
+import br.com.rafaelvieira.auction.model.User;
+import br.com.rafaelvieira.auction.mudi.dto.NewBidDto;
 import br.com.rafaelvieira.auction.repositories.LanceRepository;
 import br.com.rafaelvieira.auction.repositories.LeilaoRepository;
 import br.com.rafaelvieira.auction.repositories.UsuarioRepository;
-import br.com.rafaelvieira.auction.service.LanceService;
+import br.com.rafaelvieira.auction.service.BidService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -21,10 +21,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
 @SpringJUnitConfig
-public class LanceServiceTest {
+public class BidServiceTest {
 
 	@Autowired
-	private LanceService service;
+	private BidService service;
 	
 	
 	@MockBean
@@ -37,39 +37,39 @@ public class LanceServiceTest {
 	public LeilaoRepository leiloesRepo;
 
 
-	private NovoLanceDto lanceDto;
-	private Leilao leilao;
-	private Usuario usuario;
-	private Lance lance;
+	private NewBidDto lanceDto;
+	private Auction auction;
+	private User user;
+	private Bid lance;
 	
 	@TestConfiguration
     static class EmployeeServiceImplTestContextConfiguration {
  
         @Bean
-        public LanceService employeeService() {
-            return new LanceService();
+        public BidService employeeService() {
+            return new BidService();
         }
     }
 
 	@BeforeEach
 	public void setUp() {
 		long leilaoId = 1l;
-		lanceDto = new NovoLanceDto();
+		lanceDto = new NewBidDto();
 		lanceDto.setLeilaoId(leilaoId);
 		lanceDto.setValor(BigDecimal.TEN);
 		
-		leilao = new Leilao("tablet");
-		leilao.setId(leilaoId);
+		auction = new Auction("tablet");
+		auction.setId(leilaoId);
 		
-		usuario = new Usuario("fulano");
-		lance = lanceDto.toLance(usuario);
+		user = new User("fulano");
+		lance = lanceDto.toLance(user);
 	}
 
 	@Test
 	public void deveAceitarUmLance() {
-		Mockito.when(leiloesRepo.getOne(leilao.getId())).thenReturn(leilao);
+		Mockito.when(leiloesRepo.getOne(auction.getId())).thenReturn(auction);
 		Mockito.when(lancesRepo.save(lance)).thenReturn(lance);
-		Mockito.when(usuariosRepo.getUserByUsername("fulano")).thenReturn(usuario);
+		Mockito.when(usuariosRepo.getUserByUsername("fulano")).thenReturn(user);
 		
 		boolean propus = service.propoeLance(lanceDto, "fulano");
 		
@@ -78,13 +78,13 @@ public class LanceServiceTest {
 	
 	@Test
 	public void naoDeveAceitarUmLanceDuplicado() {
-		Mockito.when(leiloesRepo.getOne(leilao.getId())).thenReturn(leilao);
+		Mockito.when(leiloesRepo.getOne(auction.getId())).thenReturn(auction);
 		Mockito.when(lancesRepo.save(lance)).thenReturn(lance);
-		Mockito.when(usuariosRepo.getUserByUsername("fulano")).thenReturn(usuario);
+		Mockito.when(usuariosRepo.getUserByUsername("fulano")).thenReturn(user);
 		
 		service.propoeLance(lanceDto, "fulano");
 		
-		NovoLanceDto outroLance = new NovoLanceDto();
+		NewBidDto outroLance = new NewBidDto();
 		outroLance.setLeilaoId(1l);
 		outroLance.setValor(BigDecimal.TEN);
 		

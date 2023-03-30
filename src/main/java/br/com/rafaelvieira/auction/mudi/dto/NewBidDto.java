@@ -6,10 +6,10 @@ import java.time.LocalDate;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotNull;
 
-import br.com.rafaelvieira.auction.model.Lance;
-import br.com.rafaelvieira.auction.model.Usuario;
+import br.com.rafaelvieira.auction.model.Bid;
+import br.com.rafaelvieira.auction.model.User;
 
-public class NovoLanceDto {
+public class NewBidDto {
 	
 	
 	@NotNull
@@ -34,8 +34,8 @@ public class NovoLanceDto {
 		this.leilaoId = leilaoId;
 	}
 
-	public Lance toLance(Usuario usuario) {
-		Lance lance = new Lance(usuario, valor);
+	public Bid toLance(User user) {
+		Bid lance = new Bid(user, valor);
 		lance.setData(LocalDate.now());
 		return lance;
 	}

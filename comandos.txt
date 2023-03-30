@@ -12,7 +12,7 @@ mysqld.exe --console
 # para se conectar com mariadb (a partir da pasta bin do mariadb)
 mysql -u root
 
-create database leilao;
+create database auction;
 
 ------
 

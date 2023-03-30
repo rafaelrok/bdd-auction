@@ -4,10 +4,10 @@ import java.security.Principal;
 
 import javax.validation.Valid;
 
-import br.com.rafaelvieira.auction.model.Leilao;
-import br.com.rafaelvieira.auction.model.Usuario;
-import br.com.rafaelvieira.auction.mudi.dto.NovoLanceDto;
-import br.com.rafaelvieira.auction.mudi.dto.NovoLeilaoDto;
+import br.com.rafaelvieira.auction.model.Auction;
+import br.com.rafaelvieira.auction.model.User;
+import br.com.rafaelvieira.auction.mudi.dto.NewBidDto;
+import br.com.rafaelvieira.auction.mudi.dto.NewAuctionDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
@@ -24,7 +24,7 @@ import br.com.rafaelvieira.auction.repositories.UsuarioRepository;
 
 @Controller
 @RequestMapping("/leiloes")
-public class LeilaoController {
+public class AuctionController {
 
 
 	@Autowired
@@ -45,8 +45,8 @@ public class LeilaoController {
 	@GetMapping("/{id}/form")
 	public ModelAndView form(@PathVariable("id") Long id, Principal principal) {
 		
-		Leilao leilao = leiloes.getOne(id);
-		NovoLeilaoDto form = new NovoLeilaoDto(leilao);
+		Auction auction = leiloes.getOne(id);
+		NewAuctionDto form = new NewAuctionDto(auction);
 		
 		ModelAndView mv = new ModelAndView("leilao/form");
 		mv.addObject("usuario", principal.getName());
@@ -55,7 +55,7 @@ public class LeilaoController {
 	}
 	
 	@PostMapping
-	public ModelAndView saveOrUpdate(@Valid @ModelAttribute("leilao") NovoLeilaoDto leilaoForm, Errors errors, RedirectAttributes attr, Principal principal) {
+	public ModelAndView saveOrUpdate(@Valid @ModelAttribute("leilao") NewAuctionDto leilaoForm, Errors errors, RedirectAttributes attr, Principal principal) {
 
 		if(errors.hasErrors()) {
 			ModelAndView mv = new ModelAndView("/leilao/form");
@@ -64,11 +64,11 @@ public class LeilaoController {
 			return mv;
 		}
 		
-		Usuario usuario = usuarios.getUserByUsername(principal.getName());
-		Leilao leilao = leilaoForm.toLeilao();
-		leilao.setUsuario(usuario);
+		User user = usuarios.getUserByUsername(principal.getName());
+		Auction auction = leilaoForm.toLeilao();
+		auction.setUsuario(user);
 		
-		leiloes.save(leilao);
+		leiloes.save(auction);
 		
 		attr.addFlashAttribute("message", "Leilão salvo com sucesso");
 		
@@ -79,7 +79,7 @@ public class LeilaoController {
 	public ModelAndView newLeilao(Principal principal) {
 		ModelAndView mv = new ModelAndView("leilao/form");
 		mv.addObject("usuario", principal.getName());
-		mv.addObject("leilao", new NovoLeilaoDto());
+		mv.addObject("leilao", new NewAuctionDto());
 		return mv;
 	}
 	
@@ -88,7 +88,7 @@ public class LeilaoController {
 		ModelAndView mv = new ModelAndView("leilao/show");
 		mv.addObject("usuario", principal.getName());
 		mv.addObject("leilao", leiloes.getOne(id));
-		mv.addObject("lance", new NovoLanceDto());
+		mv.addObject("lance", new NewBidDto());
 		return mv;
 	}
 	

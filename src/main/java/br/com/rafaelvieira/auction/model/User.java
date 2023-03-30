@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "users")
-public class Usuario {
+public class User {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,14 +40,14 @@ public class Usuario {
     private boolean enabled;
 
 	@Deprecated
-	public Usuario() {
+	public User() {
 	}
 
-	public Usuario(@NotNull @NotBlank String nome) {
+	public User(@NotNull @NotBlank String nome) {
 		this.nome = nome;
 	}
 
-	public Usuario(@NotNull @NotBlank String nome, @NotNull @NotBlank @Email String email, @NotNull @NotBlank String password) {
+	public User(@NotNull @NotBlank String nome, @NotNull @NotBlank @Email String email, @NotNull @NotBlank String password) {
 		super();
 		this.nome = nome;
 		this.email = email;
@@ -126,7 +126,7 @@ public class Usuario {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Usuario other = (Usuario) obj;
+		User other = (User) obj;
 		if (nome == null) {
 			if (other.nome != null)
 				return false;

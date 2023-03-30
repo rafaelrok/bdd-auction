@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS `leilao`;
+DROP TABLE IF EXISTS `auction`;
 DROP TABLE IF EXISTS `lance`;
 DROP TABLE IF EXISTS `users`;
 
@@ -12,7 +12,7 @@ CREATE TABLE `users` (
   PRIMARY KEY (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-CREATE TABLE `leilao` (
+CREATE TABLE `auction` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `data_abertura` date NOT NULL,
   `nome` varchar(255) NOT NULL,
@@ -33,5 +33,5 @@ CREATE TABLE `lance` (
   KEY `FKao15gcf542nf81fp2qq5j3igu` (`leilao_id`),
   KEY `FKa0r0xo76a1ld305ao4kweawcb` (`usuario_user_id`),
   CONSTRAINT `FKa0r0xo76a1ld305ao4kweawcb` FOREIGN KEY (`usuario_user_id`) REFERENCES `users` (`user_id`),
-  CONSTRAINT `FKao15gcf542nf81fp2qq5j3igu` FOREIGN KEY (`leilao_id`) REFERENCES `leilao` (`id`)
+  CONSTRAINT `FKao15gcf542nf81fp2qq5j3igu` FOREIGN KEY (`leilao_id`) REFERENCES `auction` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;

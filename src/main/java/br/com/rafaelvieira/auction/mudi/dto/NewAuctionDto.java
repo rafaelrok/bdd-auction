@@ -10,9 +10,9 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
-import br.com.rafaelvieira.auction.model.Leilao;
+import br.com.rafaelvieira.auction.model.Auction;
 
-public class NovoLeilaoDto {
+public class NewAuctionDto {
 	
 	private static DateTimeFormatter ofPattern = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
@@ -31,14 +31,14 @@ public class NovoLeilaoDto {
 	@Pattern(regexp = "^\\d{2}/\\d{2}/\\d{4}$", message = "deve ser uma data no formato dd/MM/yyyy")
 	private String dataAbertura;
 
-	public NovoLeilaoDto(Leilao leilao) {
-		this.id = leilao.getId();
-		this.nome = leilao.getNome();
-		this.valorInicial = leilao.getValorInicial();
-		this.dataAbertura = leilao.getDataAbertura().format(ofPattern);
+	public NewAuctionDto(Auction auction) {
+		this.id = auction.getId();
+		this.nome = auction.getNome();
+		this.valorInicial = auction.getValorInicial();
+		this.dataAbertura = auction.getDataAbertura().format(ofPattern);
 	}
 
-	public NovoLeilaoDto() {
+	public NewAuctionDto() {
 	}
 
 	public Long getId() {
@@ -73,10 +73,10 @@ public class NovoLeilaoDto {
 		this.dataAbertura = dataAbertura;
 	}
 
-	public Leilao toLeilao() {
+	public Auction toLeilao() {
 		LocalDate date = LocalDate.parse(this.dataAbertura, ofPattern);
-		Leilao leilao = new Leilao(nome, valorInicial, date);
-		leilao.setId(id);
-		return leilao;
+		Auction auction = new Auction(nome, valorInicial, date);
+		auction.setId(id);
+		return auction;
 	}
 }

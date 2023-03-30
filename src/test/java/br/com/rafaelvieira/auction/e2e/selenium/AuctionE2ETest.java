@@ -2,50 +2,50 @@ package br.com.rafaelvieira.auction.e2e.selenium;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import br.com.rafaelvieira.auction.e2e.pages.AlterarLeilaoPage;
-import br.com.rafaelvieira.auction.e2e.pages.LeiloesPage;
+import br.com.rafaelvieira.auction.e2e.pages.UpdateAuctionPage;
+import br.com.rafaelvieira.auction.e2e.pages.AuctionPage;
 import br.com.rafaelvieira.auction.e2e.pages.LoginPage;
-import br.com.rafaelvieira.auction.e2e.pages.NovoLeilaoPage;
+import br.com.rafaelvieira.auction.e2e.pages.NewAuctionPage;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class LeiloesE2ETest extends E2ETestBase{
+public class AuctionE2ETest extends E2ETestBase{
 	
-	private LeiloesPage leiloesPage;
+	private AuctionPage auctionPage;
 
 	@BeforeEach
 	void setup() {
 		LoginPage loginPage = new LoginPage(getDriver());
-		leiloesPage = loginPage.realizaLoginComoFulano();		
+		auctionPage = loginPage.realizaLoginComoFulano();
 	}
 
 	@Test
 	public void deveCadastrarUmLeilao() {
-		NovoLeilaoPage novoLeilaoPage = leiloesPage.visitaPaginaParaCriarUmNovoLeilao();
+		NewAuctionPage novoLeilaoPage = auctionPage.visitaPaginaParaCriarUmNovoLeilao();
 		String nome = "Commodore Amiga";
 		String valor = "899.90";
 		String data = "04/08/2020";
 		
 		novoLeilaoPage.preencheForm(nome, valor, data);
 		
-		leiloesPage.esperaCarregar();
+		auctionPage.esperaCarregar();
 
-		assertTrue(leiloesPage.existe(nome, valor, data));
+		assertTrue(auctionPage.existe(nome, valor, data));
 	}
 	
 	
 	@Test
 	public void deveEditarUmLeilao() {
-		AlterarLeilaoPage novoLeilaoPage = leiloesPage.visitaPaginaParaAltearLeilao();
+		UpdateAuctionPage novoLeilaoPage = auctionPage.visitaPaginaParaAltearLeilao();
 		String nome = "Commodore Amiga";
 		String valor = "899.90";
 		String data = "04/08/2020";
 		
 		novoLeilaoPage.preencheForm(nome, valor, data);
 		
-		leiloesPage.esperaCarregar();
+		auctionPage.esperaCarregar();
 
-		assertTrue(leiloesPage.existe(nome, valor, data));
+		assertTrue(auctionPage.existe(nome, valor, data));
 	}
 	
 }

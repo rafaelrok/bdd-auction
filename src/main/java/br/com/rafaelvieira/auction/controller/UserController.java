@@ -4,7 +4,7 @@ import java.util.List;
 
 import javax.websocket.server.PathParam;
 
-import br.com.rafaelvieira.auction.model.Usuario;
+import br.com.rafaelvieira.auction.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -19,57 +19,57 @@ import br.com.rafaelvieira.auction.repositories.UsuarioRepository;
 
 //@Controller
 //@RequestMapping("/usuarios")
-public class UsuarioController {
+public class UserController {
 
 	@Autowired
 	private UsuarioRepository repository;
 	
 	
 	@GetMapping()
-	public List<Usuario> index() {
+	public List<User> index() {
 		return repository.findAll();
 	}
 	
 	@PostMapping()
-	public String create(Usuario usuario, BindingResult result) {
+	public String create(User user, BindingResult result) {
 		
-		if (usuario.getNome().isEmpty()) {
-		    result.addError(new FieldError("usuario", "nome", "Nome obrigatorio!"));
+		if (user.getNome().isEmpty()) {
+		    result.addError(new FieldError("user", "nome", "Nome obrigatorio!"));
 		}
-		if (usuario.getEmail().isEmpty()) {
-		    result.addError(new FieldError("usuario", "email", "Email obrigatorio!"));
+		if (user.getEmail().isEmpty()) {
+		    result.addError(new FieldError("user", "email", "Email obrigatorio!"));
 		}
 		
 		if(result.hasErrors()) {
 			return "/usuarios/new";
 		}
 		
-		repository.save(usuario);
+		repository.save(user);
 		return "redirect:/usuarios";
 	}
 	
 	@GetMapping("/new")
 	public ModelAndView newUsuario() {
 		ModelAndView mv = new ModelAndView("/newUsuarios");
-		mv.addObject("usuario", new Usuario());
+		mv.addObject("usuario", new User());
 		return mv;
 	}
 	
 	@PutMapping()
-	public String update(Usuario usuario, BindingResult result) {
+	public String update(User user, BindingResult result) {
 		
-		if (usuario.getNome().isEmpty()) {
-		    result.addError(new FieldError("usuario", "nome", "Nome obrigatorio!"));
+		if (user.getNome().isEmpty()) {
+		    result.addError(new FieldError("user", "nome", "Nome obrigatorio!"));
 		}
-		if (usuario.getEmail().isEmpty()) {
-		    result.addError(new FieldError("usuario", "email", "Email obrigatorio!"));
+		if (user.getEmail().isEmpty()) {
+		    result.addError(new FieldError("user", "email", "Email obrigatorio!"));
 		}
 		
 		if(result.hasErrors()) {
 			return "/usuarios/edit";
 		}
 		
-		repository.save(usuario);
+		repository.save(user);
 		return "redirect:/usuarios";
 	}
 	

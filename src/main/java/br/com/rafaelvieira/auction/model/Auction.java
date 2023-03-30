@@ -20,7 +20,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 @Entity
-public class Leilao {
+public class Auction {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,42 +36,42 @@ public class Leilao {
 
 	@OneToOne
 	@JoinColumn(nullable = false)
-	private Usuario usuario;
+	private User user;
 
 	@NotNull
 	private LocalDate dataAbertura;
 
-	@OneToMany(mappedBy = "leilao")
-	private List<Lance> lances = new ArrayList<>();
+	@OneToMany(mappedBy = "auction")
+	private List<Bid> lances = new ArrayList<>();
 
 	@Deprecated
-	public Leilao() {
+	public Auction() {
 	}
 
-	public Leilao(@NotNull @NotBlank String nome) {
+	public Auction(@NotNull @NotBlank String nome) {
 		this.nome = nome;
 	}
 	
-	public Leilao(@NotBlank String nome, @NotNull @DecimalMin("0.1") BigDecimal valorInicial, @NotNull LocalDate dataAbertura) {
+	public Auction(@NotBlank String nome, @NotNull @DecimalMin("0.1") BigDecimal valorInicial, @NotNull LocalDate dataAbertura) {
 		this.nome = nome;
 		this.valorInicial = valorInicial;
 		this.dataAbertura = dataAbertura;
 	}
 	
 
-	public Leilao(@NotNull @NotBlank String nome, @NotNull @DecimalMin("0.1") BigDecimal valorInicial,
-			@NotNull Usuario usuario) {
+	public Auction(@NotNull @NotBlank String nome, @NotNull @DecimalMin("0.1") BigDecimal valorInicial,
+				   @NotNull User user) {
 		this.nome = nome;
 		this.valorInicial = valorInicial;
-		this.usuario = usuario;
+		this.user = user;
 		this.dataAbertura = LocalDate.now();
 	}
 
-	public Leilao(@NotNull @NotBlank String nome, @NotNull @DecimalMin("0.1") BigDecimal valorInicial,
-			@NotNull LocalDate data, @NotNull Usuario usuario) {
+	public Auction(@NotNull @NotBlank String nome, @NotNull @DecimalMin("0.1") BigDecimal valorInicial,
+				   @NotNull LocalDate data, @NotNull User user) {
 		this.nome = nome;
 		this.valorInicial = valorInicial;
-		this.usuario = usuario;
+		this.user = user;
 		this.dataAbertura = data;
 	}
 
@@ -114,19 +114,19 @@ public class Leilao {
 		return valorInicial;
 	}
 
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
+	public void setUsuario(User user) {
+		this.user = user;
 	}
 
-	public Usuario getUsuario() {
-		return usuario;
+	public User getUsuario() {
+		return user;
 	}
 
-	public void setLances(List<Lance> lances) {
+	public void setLances(List<Bid> lances) {
 		this.lances = lances;
 	}
 
-	public boolean propoe(Lance lanceAtual) {
+	public boolean propoe(Bid lanceAtual) {
 		
 		if (this.estaSemLances() || ehUmLanceValido(lanceAtual)) {
 			adicionarLance(lanceAtual);
@@ -135,36 +135,36 @@ public class Leilao {
 		return false;
 	}
 
-	private void adicionarLance(Lance lance) {
+	private void adicionarLance(Bid lance) {
 		lances.add(lance);
 		lance.setLeilao(this);
 	}
 
-	private boolean ehUmLanceValido(Lance lance) {
+	private boolean ehUmLanceValido(Bid lance) {
 		return valorEhMaior(lance, ultimoLanceDado()) && 
 				oUltimoUsuarioNaoEhOMesmoDo(lance) && 
 				totalDeLancesDoUsuarioEhMenorIgual5(lance.getUsuario());
 	}
 
-	private boolean valorEhMaior(Lance lance, Lance ultimoLanceDado) {
+	private boolean valorEhMaior(Bid lance, Bid ultimoLanceDado) {
 		return lance.getValor().compareTo(ultimoLanceDado.getValor()) > 0;
 	}
 
 
-	private boolean totalDeLancesDoUsuarioEhMenorIgual5(Usuario usuario) {
-		int totalDeLances = qtdDeLancesDo(usuario);
+	private boolean totalDeLancesDoUsuarioEhMenorIgual5(User user) {
+		int totalDeLances = qtdDeLancesDo(user);
 		return totalDeLances < 5;
 	}
 
-	private boolean oUltimoUsuarioNaoEhOMesmoDo(Lance lance) {
-		Usuario ultimoUsuarioQueDeuLance = ultimoLanceDado().getUsuario();
-		return !ultimoUsuarioQueDeuLance.equals(lance.getUsuario());
+	private boolean oUltimoUsuarioNaoEhOMesmoDo(Bid lance) {
+		User ultimoUserQueDeuLance = ultimoLanceDado().getUsuario();
+		return !ultimoUserQueDeuLance.equals(lance.getUsuario());
 	}
 
-	private int qtdDeLancesDo(Usuario usuario) {
+	private int qtdDeLancesDo(User user) {
 		int total = 0;
-		for (Lance l : lances) {
-			if (l.getUsuario().equals(usuario))
+		for (Bid l : lances) {
+			if (l.getUsuario().equals(user))
 				total++;
 		}
 		return total;
@@ -174,11 +174,11 @@ public class Leilao {
 		return this.lances.isEmpty();
 	}
 
-	private Lance ultimoLanceDado() {
+	private Bid ultimoLanceDado() {
 		return lances.get(lances.size() - 1);
 	}
 
-	public List<Lance> getLances() {
+	public List<Bid> getLances() {
 		return Collections.unmodifiableList(lances);
 	}
 
