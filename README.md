@@ -96,13 +96,12 @@ Para Utilizar o projeto `BDD-Auction`, após o procedimento acima, siga estas et
 ```
 - Após execute o projeto com sua IDEA de preferência.
 
-- Devera criar um o aplications.properties e copiar as configurações que esta informada no
-  application-example.properties e informar as configurações de seu banco H2 ou DB em ambiente Dev.
+- Devera configurar o aplications-test.properties | aplications-prod.properties e informar as configurações de seu banco H2 ou DB em ambiente Dev.
 
 - Após só executar sua apliacação com spring-boot:run
 ```
-Link para documentação do [Cucumber](https://cucumber.io/docs/cucumber/).
-Link para documentação do [Selenium](https://www.selenium.dev/pt-br/documentation/).
+- Link para documentação do [Cucumber](https://cucumber.io/docs/cucumber/).
+- Link para documentação do [Selenium](https://www.selenium.dev/pt-br/documentation/).
 
 Com o Cucumber, é possível criar cenários de teste em linguagem natural que descrevem o comportamento esperado do software e, em seguida, traduzi-los em código de teste que pode ser executado automaticamente. Isso ajuda a garantir que o software esteja funcionando corretamente e de acordo com as especificações do cliente.
 
