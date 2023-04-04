@@ -6,7 +6,8 @@ import org.junit.runner.RunWith;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(
-        features = "classpath:features"
+        features = "classpath:features",
+        glue = "br.com.rafaelvieira.auction.acceptance.steps"
 )
 public class AuctionCucumberRunner {
 

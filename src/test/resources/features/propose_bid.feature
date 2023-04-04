@@ -3,11 +3,12 @@
 Feature: proposing bids
 
   Scenario: Proposing a single valid bid
-    Given Given a valid bid
+    Given a valid bid with "name"
     When propose to auction
-    Then the bid must be accepted
+    Then bid must be accepted
 
   Scenario: Proposing multiple valid bids
-    Given several valid bids
+    Given a bid of 10.0 real from the user "username"
+    And a bid of 15.0 real from the user "username2"
     When propose multiple bids in the auction
     Then Bids are accepted
