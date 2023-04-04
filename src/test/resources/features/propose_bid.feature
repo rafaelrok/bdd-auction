@@ -12,3 +12,16 @@ Feature: proposing bids
     And a bid of 15.0 real from the user "username2"
     When propose multiple bids in the auction
     Then Bids are accepted
+
+  Scenario Outline: Proposing bid invalid
+    Given a bid invalid of <value> real
+    When propose to auction
+    Then bid is not accepted
+
+    Examples:
+      | value |
+      | 0     |
+      | -1    |
+      | 0.0   |
+      | -1.0  |
+      | -1000 |

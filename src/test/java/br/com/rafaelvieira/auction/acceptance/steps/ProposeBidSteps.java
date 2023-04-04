@@ -98,4 +98,14 @@ public class ProposeBidSteps {
         }
     }
 
+    @Given("a bid invalid of {double} real")
+    public void a_bid_invalid_of_real(double value) {
+        throw new io.cucumber.java.PendingException();
+    }
+
+    @Then("bid is not accepted")
+    public void bid_is_not_accepted() {
+        throw new io.cucumber.java.PendingException();
+    }
+
 }
